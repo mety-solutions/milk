@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Milk Jug Challenge | Animated Pouring Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Game Panel */
+        .game-panel {
+            background: #f7fafc;
+            /*border-radius: 72px;*/
+            box-shadow: 0 30px 35px rgba(0, 0, 0, 0.4), inset 0 1px 3px rgba(255, 255, 200, 0.8);
+            padding: 1.8rem 1.5rem 2rem;
+            max-width: 1200px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.3rem;
+            margin: 0 0 0.2rem;
+            color: #4a5568;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-shadow: 3px 3px 0 #e9dbaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6262be;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            border-bottom: 2px dashed #e2cf9a;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 6px;
+        }
+
+        /* 3 jugs container */
+        .jugs-stage {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        /* JUG CARD with animated bucket */
+        .jug {
+            background: #f5ede0;
+            /*border-radius: 40px 40px 55px 55px;*/
+            box-shadow: 0 20px 25px -10px rgba(0, 0, 0, 0.3);
+            width: 190px;
+            padding: 1rem 1rem 1.6rem;
+            text-align: center;
+            transition: transform 0.25s ease;
+            border: 1px solid #ffe2b5;
+        }
+
+        /*.jug:hover {
+            transform: translateY(-6px);
+        }*/
+
+        .jug-header {
+            font-weight: bold;
+            background: #dac282;
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2f2a1c;
+            margin-bottom: 12px;
+        }
+
+        /* ANIMATED BUCKET (liquid fill animation) */
+        .bucket {
+            position: relative;
+            width: 130px;
+            height: 140px;
+            margin: 0 auto 12px;
+            background: #e7dbbc;
+            border: 4px solid #42c9ff;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: inset 0 -5px 0 #b5976b, 0 8px 12px rgba(0,0,0,0.2);
+            transition: all 0.1s;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        .bucket.medium {
+            width: 100px !important;
+            height: 100px !important;
+            margin-top: 40px;
+        }
+        
+         .bucket.small {
+            width: 80px !important;
+            height: 80px !important;
+            margin-top: 60px;
+        }
+        
+
+        /* Liquid layer - dynamic height with smooth transition */
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #f9f0c0, #fae884);
+            transition: height 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-radius: 0 0 18px 18px;
+            box-shadow: inset 0 8px 6px -6px rgba(0,0,0,0.2);
+        }
+
+        /* Milk texture effect */
+        .liquid::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: radial-gradient(circle, rgba(255,255,210,0.7) 2px, transparent 2px);
+            background-size: 12px 12px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* handle of jug */
+        /*.bucket::before {
+            content: '';
+            position: absolute;
+            right: -18px;
+            top: 35px;
+            width: 22px;
+            height: 45px;
+            background: #c2a066;
+            border-radius: 40% 40% 30% 30%;
+            border: 2px solid #9c7a46;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.1);
+        }*/
+
+        .volume-text {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 8px 0 2px;
+            border-radius: 50px;
+            padding: 4px 0;
+            color: #3c5e2b;
+            z-index: 100;
+            position: relative;
+        }
+
+        .volume-text span {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .counter {
+		    background: #3498db;
+		    color: white;
+		    padding: 10px 18px;
+		    border-radius: 25px;
+		    font-weight: bold;
+		    font-size: 16px;
+		}
+
+        .capacity-badge {
+            font-size: 0.75rem;
+            background: #c6f6d5;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            color: #3c5e2b;
+        }
+
+        /* Pour buttons */
+        .pour-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .pour-btn {
+            background: #d6c29c;
+            border: none;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.08s linear;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+            color: #2d2b1e;
+            flex: 1;
+            max-width: 75px;
+        }
+
+        .pour-btn:active {
+            transform: scale(0.94);
+            background: #c2aa78;
+        }
+
+        .pour-btn:disabled {
+            opacity: 0.4;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* control bar */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0 15px;
+            flex-wrap: wrap;
+        }
+
+        .ctrl-btn {
+            background: #52a61d;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 28px;
+            /*border-radius: 50px;*/
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            /*box-shadow: 0 5px 0 #2e4a1e;*/
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ctrl-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #2e4a1e;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            /*box-shadow: 0 5px 0 #7a532e;*/
+        }
+
+        .message {
+            background: #c6f6d5;
+            /*border-radius: 60px;*/
+            padding: 12px 18px;
+            text-align: center;
+            font-weight: 500;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #2f5322;
+            transition: all 0.2s;
+            /*border-left: 6px solid #b99e62;*/
+        }
+
+        .victory-msg {
+            background: #c8e6b5;
+            border-left-color: #4caf50;
+            color: #1e4a1a;
+            font-weight: bold;
+            animation: pulse 0.8s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); background: #c8e6b5; }
+            50% { transform: scale(1.01); background: #b9da9e; }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #4a5568;
+        }
+
+        @media (max-width: 700px) {
+            .jug {
+                width: 155px;
+            }
+            .bucket {
+                width: 105px;
+                height: 120px;
+            }
+            .volume-text {
+                font-size: 1.6rem;
+            }
+            .pour-btn {
+                font-size: 0.6rem;
+                padding: 5px 6px;
+            }
+        }
+        
+        
+    </style>
+</head>
+<body>
+<div class="game-panel">
+    <h1>
+        <span>🪣</span> MILK JUG PUZZLE <span>🪣</span>
+    </h1>
+    <div style="text-align: center;">
+       <div class="subtitle">12L · 7L · 5L  |  Pour & try to get exactly 1L!</div>
+       <div class="counter">
+        🥛 Pours: <span id="count">0</span>
+       </div>
+    </div>
+
+    <div class="jugs-stage" id="jugsStage"></div>
+
+    <div class="controls">
+        <button class="ctrl-btn" id="resetGameBtn" style="display:none;">🔄 RESET ALL</button>
+        <button class="ctrl-btn reset-btn" id="refill12Btn">🍼 FILL 12L (full reset)</button>
+    </div>
+
+    <div class="message" id="messageBox">
+        💧 Click any "Pour" button → milk flows between jugs.
+    </div>
+    <footer>© Mety Solutions - 2026 - All rights reserved</footer>
+</div>
+
+<script src="jsmin/milk.js?v=0.2"></script>
+</body>
+</html>
