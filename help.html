@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Milk Jug Puzzle Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      background: #f6f8fb;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #2c3e50;
+    }
+
+    p {
+      font-size: 1.05rem;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f3f7;
+    }
+
+    .highlight {
+      color: #0077ff;
+      font-weight: bold;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 24px;
+      background: #0077ff;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: #005fcc;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    header .button {
+      font-size: 1.1rem;
+      padding: 16px 28px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <h1>🥛 Milk Jug Puzzle Game</h1>
+  <p>
+    Measure exactly <span class="highlight">1 liter</span> using logic and strategy.
+  </p>
+
+  <div>
+    <a href="https://mety-solutions.github.io/milk/" class="button">
+      ▶️ Play Now
+    </a>
+  </div>
+</header>
+
+<div class="card">
+  <h2>🎮 Game Overview</h2>
+  <p>You have three jugs:</p>
+  <ul>
+    <li><strong>12L Jug</strong> - starts full</li>
+    <li><strong>7L Jug</strong> - empty</li>
+    <li><strong>5L Jug</strong> - empty</li>
+  </ul>
+  <p>
+    Your goal is to get exactly <strong>1 liter</strong> using the fewest moves possible.
+  </p>
+</div>
+
+<div class="card">
+  <h2>✨ Features</h2>
+  <ul>
+    <li>Smooth liquid animations</li>
+    <li>Smart buttons (only valid moves shown)</li>
+    <li>Directional arrows ➡️ ⬅️</li>
+    <li>Victory detection 🎉</li>
+    <li>Responsive design (mobile + desktop)</li>
+    <li>Real-time volume feedback</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>🎯 How to Play</h2>
+  <ol>
+    <li>Click arrows to pour milk between jugs</li>
+    <li>Only valid moves are allowed</li>
+    <li>Watch liquid animate as you pour</li>
+    <li>Reach exactly <strong>1L</strong> to win</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2>🕹️ Controls</h2>
+  <table>
+    <tr>
+      <th>Button</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <td><strong>➡️ / ⬅️ 7L</strong></td>
+      <td>Pour to/from 7L jug</td>
+    </tr>
+    <tr>
+      <td><strong>➡️ / ⬅️ 5L</strong></td>
+      <td>Pour to/from 5L jug</td>
+    </tr>
+    <tr>
+      <td><strong>🍼 FILL 12L</strong></td>
+      <td>Reset game</td>
+    </tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>🧩 Puzzle Logic</h2>
+  <p>This classic puzzle allows only pouring operations:</p>
+  <ul>
+    <li>Empty source jug</li>
+    <li>Fill destination jug</li>
+    <li>Or both at once</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>🏆 Winning Condition</h2>
+  <ul>
+    <li>Get exactly 1L in any jug</li>
+    <li>Triggers victory animation 🎉</li>
+    <li>Try to beat the optimal move count!</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>🔧 Technical Details</h2>
+  <ul>
+    <li>Pure HTML / CSS / JavaScript</li>
+    <li>CSS animations</li>
+    <li>Responsive layout</li>
+    <li>Simple state management</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>📱 Browser Support</h2>
+  <ul>
+    <li>Chrome (recommended)</li>
+    <li>Firefox</li>
+    <li>Safari</li>
+    <li>Edge</li>
+    <li>Mobile browsers</li>
+  </ul>
+</div>
+
+<div class="cta">
+  <a href="https://mety-solutions.github.io/milk/" class="button">
+    ▶️ Play the Game
+  </a>
+</div>
+
+<footer>
+  <p>© Mety Solutions - 2026 - All rights reserved</p>
+</footer>
+
+</div>
+
+</body>
+</html>
